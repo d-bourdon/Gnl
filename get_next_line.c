@@ -6,8 +6,10 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 13:20:56 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/06 13:33:00 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/08 12:16:49 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int		get_next_line(int )
