@@ -6,9 +6,14 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 13:33:17 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/08 12:16:55 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/08 15:27:42 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+
+# define BUFF_SIZE 1000
 
 #		 include <stdio.h> ///dsgauidgsauydsa
 # include <sys/types.h>
@@ -19,3 +24,5 @@
 # include "libft/libft.h"
 
 int		get_next_line(int const fd, char **line);
+
+#endif
