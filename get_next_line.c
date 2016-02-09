@@ -6,38 +6,32 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 13:20:56 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/08 16:47:35 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/09 14:15:04 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*readnext(int fd)
-{
-	char	*str;
-	str = (char*)malloc(sizeof(char) * BUFF_SIZE + 1);
-	if (read(fd, str, BUFF_SIZE))
-		return (str);
-	return(0);
-}
-
 int		get_next_line(int fd, **line)
 {
-	int			i;
-	static char	**tmp;
+	char	*str;
+	int		i;
 
 	i = 0;
-	while (*tmp[i] != '\n')
+	while (i <= BUFF_SIZE)
 	{
-		if (*tmp[i] == '\0')
+		ft_strnew(str, 1);
+		if (read(fd, str, 1) == -1)
+			return(-1);
+		if (str[i] == '\n' || str[i] == EOF)
 		{
-			i = 0;
-			break;
+			if (str[i] == EOF)
+				return (0);
+			else
+				return (1);
 		}
-		i++;
+		strnew(final, str)
+
 	}
-	if (i == 0)
-	{
-		
-	}
+
 }
