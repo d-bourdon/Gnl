@@ -6,14 +6,14 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 13:33:17 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/09 12:47:30 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/11 15:54:40 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFF_SIZE 1000
+# define BUFF_SIZE 2000
 # define EOF -1
 
 #		 include <stdio.h> ///dsgauidgsauydsa

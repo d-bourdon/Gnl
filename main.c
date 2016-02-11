@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 14:40:09 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/08 16:47:38 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/11 15:54:06 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int		main(void)
 	while (j < 2)
 	{
 		get_next_line(i, myreturn);
-		printf("Hello: %s\n", myreturn);
+		printf("%s", myreturn[0]);
+		j++;
 	}
 	close(i);
 }

@@ -6,32 +6,34 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 13:20:56 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/09 14:15:04 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/11 15:53:52 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		get_next_line(int fd, **line)
+int		get_next_line(int fd,char **line)
 {
 	char	*str;
+	char	*final;
 	int		i;
 
 	i = 0;
+	str = ft_strnew(1);
+	final = ft_strnew(1);
 	while (i <= BUFF_SIZE)
 	{
-		ft_strnew(str, 1);
 		if (read(fd, str, 1) == -1)
 			return(-1);
-		if (str[i] == '\n' || str[i] == EOF)
-		{
+		if (str[0] == '\n' || str[0] == EOF)
+		{	
 			if (str[i] == EOF)
 				return (0);
-			else
-				return (1);
+			return (1);
 		}
-		strnew(final, str)
-
+		final = ft_strjoin(final, str);
+		i++;
+		*line = final;
 	}
-
+	return (1);
 }
