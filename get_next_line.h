@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 13:33:17 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/11 15:54:40 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/11 17:48:04 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 # define GET_NEXT_LINE_H
 
 # define BUFF_SIZE 2000
-# define EOF -1
 
-#		 include <stdio.h> ///dsgauidgsauydsa
+# include <stdio.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
