@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 14:40:09 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/11 17:48:08 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/12 16:45:02 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		main(void)
 	j = 0;
 	k = 0;
 	i = open("test.txt", O_RDONLY, S_IREAD);
-	while (j < 2)
+	while (j < 3)
 	{
 		k = get_next_line(i, myreturn);
 		printf("%s retun (%d)", myreturn[0], k);
