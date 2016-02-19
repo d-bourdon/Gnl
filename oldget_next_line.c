@@ -5,52 +5,41 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/18 14:06:31 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/19 15:17:49 by dbourdon         ###   ########.fr       */
+/*   Created: 2016/02/06 13:20:56 by dbourdon          #+#    #+#             */
+/*   Updated: 2016/02/12 16:36:35 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		buff_stock_void (char *buff_stock, char *out)
+
+int		get_next_line(int fd,char **line)
 {
+	char	*str;
+	char	*final;
 	int		i;
+	int		ret;
 
 	i = 0;
-	while (i >= 0)
+	ret = 0;
+	str = ft_strnew(1);
+	final = ft_strnew(1);
+	if (fd == -1 || line == NULL)
+		return (-1);
+	while (i <= BUFF_SIZE)
 	{
-		if (buff_stock[i] == '\0')
-		{
-			if (i == 0);
-				return(0);
-			return(i);
+		ret = read(fd, str, 1);
+		if (ret == -1)
+			return(-1);
+		if (str[0] == '\n' || ret == 0)
+		{	
+			if (ret == 0)
+				return (0);
+			return (1);
 		}
-		else if (buff_stock[i] == '\n')
-			ft_return(1);
-		else
-			out[i] == buff_stock[i];
+		final = ft_strjoin(final, str);
 		i++;
+		*line = final;
 	}
-}
-
-int		ft_return(int val)
-{
-	ghdjsad                 
-}
-
-//fonction reread de x 
-int		get_next_line(int fd, char **line)
-{
-	static char	buff_stock;
-	int			nb;
-	char		out;
-
-	nb = buff_stock_void(buff_stock, out);
-	if (nb == 0)
-		read
-			buffstock//read total
-	else
-		read de calcule
-			buffstock
-		//read de buffsize-nb
+	return (1);
 }
