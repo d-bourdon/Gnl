@@ -6,18 +6,18 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 14:06:31 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/19 15:17:49 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/21 14:55:33 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		buff_stock_void (char *buff_stock, char *out)
+int		buff_stock_void (char *buff_stock, char *out, int limit)
 {
 	int		i;
 
 	i = 0;
-	while (i >= 0)
+	while (i < limit)
 	{
 		if (buff_stock[i] == '\0')
 		{
@@ -38,19 +38,17 @@ int		ft_return(int val)
 	ghdjsad                 
 }
 
-//fonction reread de x 
 int		get_next_line(int fd, char **line)
 {
 	static char	buff_stock;
 	int			nb;
 	char		out;
-
-	nb = buff_stock_void(buff_stock, out);
-	if (nb == 0)
-		read
-			buffstock//read total
-	else
-		read de calcule
-			buffstock
-		//read de buffsize-nb
+	if (buff_stock == NULL)
+		buff_stock = ft_strnew(BUFF_SIZE);
+	nb = buff_stock_void(buff_stock, out, BUFF_SIZE);
+	if (nb != -1)
+	{
+		read(fd, buff_stock, BUFF_SIZE);
+		buff_stock_void(buff_stock, out, BUFF_SIZE - nb);
+	}
 }
