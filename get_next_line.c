@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 14:06:31 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/22 15:28:53 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/22 16:44:13 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,17 @@
 int		ft_read(char **buff_stock, int fd)
 {
 	int		ret;
+	char	*tmp;
 
 	ret = 0;
-	*buff_stock = ft_strnew(BUFF_SIZE);
+	tmp = ft_strnew(BUFF_SIZE);
+	if (*buff_stock == NULL)
+		*buff_stock = ft_strnew(BUFF_SIZE);
 	if (*buff_stock == NULL)
 		return(-1);
-	ret = read(fd, *buff_stock, BUFF_SIZE);
+	ret = read(fd, tmp, BUFF_SIZE);
+	*buff_stock = ft_strjoin(*buff_stock, tmp);
+	free(tmp);
 	return(ret);
 }
 
@@ -56,9 +61,9 @@ int		get_next_line(int fd, char **line)
 			return(ft_return(1, out, line, &buff_stock, i));
 		else if (buff_stock[i] == '\0')
 		{
-			free(&buff_stock);
-			if(ft_read(&buff_stock, fd) == -1)
-				return(-1);
+			
+			if(ft_read(&buff_stock, fd) == 0)
+				return(0);
 			nb = i;
 			i = -1;
 		}
@@ -67,6 +72,7 @@ int		get_next_line(int fd, char **line)
 		else
 			out[j++] = buff_stock[i];
 		i++;
+		printf("i = %d\n", i);
 	}
 	return(ft_return(1, out, line, &buff_stock, i));
 }
