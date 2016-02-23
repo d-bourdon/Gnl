@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 14:06:31 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/22 16:44:13 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/23 17:13:27 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@ int		ft_read(char **buff_stock, int fd)
 	char	*tmp;
 
 	ret = 0;
-	tmp = ft_strnew(BUFF_SIZE);
+	tmp = ft_strnew(BUFF_SIZE + 1);
 	if (*buff_stock == NULL)
-		*buff_stock = ft_strnew(BUFF_SIZE);
+		*buff_stock = ft_strnew(BUFF_SIZE + 1);
 	if (*buff_stock == NULL)
 		return(-1);
 	ret = read(fd, tmp, BUFF_SIZE);
+	//printf("%d", ret);
+	if (ret == -1)
+		return(-1);
 	*buff_stock = ft_strjoin(*buff_stock, tmp);
 	free(tmp);
 	return(ret);
@@ -51,19 +54,22 @@ int		get_next_line(int fd, char **line)
 	j = 0;
 	nb = 0;
 	out = ft_strnew(BUFF_SIZE);
+	if (fd < 0)
+		return(-1);
 	if (buff_stock == NULL)
 		if (ft_read(&buff_stock, fd) == -1)
 			return(-1);
-	printf("Phrase: %s\n", buff_stock);
 	while (i < BUFF_SIZE - nb)
 	{
 		if (buff_stock[i] == '\n')
 			return(ft_return(1, out, line, &buff_stock, i));
 		else if (buff_stock[i] == '\0')
 		{
-			
-			if(ft_read(&buff_stock, fd) == 0)
-				return(0);
+			nb = ft_read(&buff_stock, fd);
+			if (nb == 0)
+				return(ft_return(0, out, line, &buff_stock, i));
+			if (nb == -1)
+				return(-1);
 			nb = i;
 			i = -1;
 		}
@@ -72,7 +78,6 @@ int		get_next_line(int fd, char **line)
 		else
 			out[j++] = buff_stock[i];
 		i++;
-		printf("i = %d\n", i);
 	}
 	return(ft_return(1, out, line, &buff_stock, i));
 }
