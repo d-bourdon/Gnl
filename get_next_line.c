@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 14:06:31 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/24 14:10:22 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/24 17:28:41 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,16 @@ int		ft_return(char *out, char **line, char **buff_stock, int i)
 {
 	if(line == NULL)
 		return(-1);
-        :s
-        :s
 	*line = out;
 	*buff_stock = *buff_stock + (i + 1);
 	if (out[0] != '\0' && out != NULL)
 		return(1);
 	else
+	{
+		if (i > 0)
+			return(1);
 		return(0);
+	}
 }
 
 int		get_next_line(int fd, char **line)
