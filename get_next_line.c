@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 14:06:31 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/23 17:13:27 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/24 11:57:03 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ int		ft_read(char **buff_stock, int fd)
 	if (*buff_stock == NULL)
 		return(-1);
 	ret = read(fd, tmp, BUFF_SIZE);
-	//printf("%d", ret);
+	printf("Je viens de lire: %s\n Mon Buff_stock est: %s\n", tmp, *buff_stock);
 	if (ret == -1)
 		return(-1);
 	*buff_stock = ft_strjoin(*buff_stock, tmp);
+	printf("Apres mon join: %s\n", *buff_stock);
 	free(tmp);
 	return(ret);
 }
@@ -72,6 +73,7 @@ int		get_next_line(int fd, char **line)
 				return(-1);
 			nb = i;
 			i = -1;
+			j = 0;
 		}
 		else if (buff_stock[i] == EOF)
 			return(ft_return(0, out, line, &buff_stock, i));

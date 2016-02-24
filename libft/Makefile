@@ -6,7 +6,7 @@
 #    By: paim <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/07 15:51:25 by paim              #+#    #+#              #
-#    Updated: 2016/01/25 14:42:08 by paim             ###   ########.fr        #
+#    Updated: 2016/02/24 11:40:18 by dbourdon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,14 +88,11 @@ $(NAME) :
 	@clang $(FLAGS) -c $(SRC)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
-	@echo "compilation..."
 
 clean: 
 	@rm -f $(OBJ)
-	@echo "supression .o ..."
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "supression totale..."
 
 re: fclean all

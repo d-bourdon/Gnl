@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 14:40:09 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/22 15:38:41 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/24 11:53:22 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		main(void)
 	while (j < 15)
 	{
 		k = get_next_line(i, myreturn);
-		printf("%s retun (%d)", myreturn[0], k);
+		printf("--> %s retun (%d)\n", myreturn[0], k);
 		j++;
 	}
 	close(i);
