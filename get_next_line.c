@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 14:06:31 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/24 17:28:41 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/02/25 14:31:42 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ int		ft_read(char **buff_stock, int fd)
 	ret = read(fd, tmp, BUFF_SIZE);
 	if (ret == -1)
 		return(-1);
+//	printf("j'ai '%s' , Je lit : '%s' \n", *buff_stock, tmp);
 	*buff_stock = ft_strjoin(*buff_stock, tmp);
+//	printf("Au final j'ai '%s'", *buff_stock);
 	free(tmp);
 	return(ret);
 }
@@ -64,8 +66,10 @@ int		get_next_line(int fd, char **line)
 	if (buff_stock == NULL)
 		if (ft_read(&buff_stock, fd) == -1)
 			return(-1);
-	while (i < BUFF_SIZE)
+	while (i > -1)
 	{
+		if (j == 0)
+			out = ft_strnew(ft_strlen(buff_stock));
 		if (buff_stock[i] == '\n')
 			return(ft_return(out, line, &buff_stock, i));
 		else if (buff_stock[i] == '\0')
@@ -78,6 +82,7 @@ int		get_next_line(int fd, char **line)
 			nb = i;
 			i = -1;
 			j = 0;
+			free(out);
 		}
 		else if (buff_stock[i] == EOF)
 			return(ft_return(out, line, &buff_stock, i));
