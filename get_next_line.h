@@ -6,23 +6,23 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 13:33:17 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/25 14:29:15 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/03/02 13:47:32 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFF_SIZE 20
-
-# include <stdio.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <unistd.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include "libft/libft.h"
 
-int		get_next_line(int const fd, char **line);
+int		re_lecture(const int fd, char **line, char **str, int ret);
+int		re_lecture2(char **stock, char *buff, char **line, char **str);
+int		lecture(char **str, char **line);
+int		get_next_line(const int fd, char **line);
+char	*ft_strjoinfree(char *s1, char *s2, int	mode);
+
+# define BUFF_SIZE 20
 
 #endif

@@ -5,90 +5,97 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/18 14:06:31 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/02/25 14:31:42 by dbourdon         ###   ########.fr       */
+/*   Created: 2016/02/06 13:33:17 by dbourdon          #+#    #+#             */
+/*   Updated: 2016/03/02 13:47:23 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		ft_read(char **buff_stock, int fd)
+char	*ft_strjoinfree(char *s1, char *s2, int mode)
 {
-	int		ret;
-	char	*tmp;
+	char *tmp;
 
-	ret = 0;
-	tmp = ft_strnew(BUFF_SIZE + 1);
-	if (*buff_stock == NULL)
-		*buff_stock = ft_strnew(BUFF_SIZE + 1);
-	if (*buff_stock == NULL)
-		return(-1);
-	ret = read(fd, tmp, BUFF_SIZE);
-	if (ret == -1)
-		return(-1);
-//	printf("j'ai '%s' , Je lit : '%s' \n", *buff_stock, tmp);
-	*buff_stock = ft_strjoin(*buff_stock, tmp);
-//	printf("Au final j'ai '%s'", *buff_stock);
-	free(tmp);
-	return(ret);
-}
-
-int		ft_return(char *out, char **line, char **buff_stock, int i)
-{
-	if(line == NULL)
-		return(-1);
-	*line = out;
-	*buff_stock = *buff_stock + (i + 1);
-	if (out[0] != '\0' && out != NULL)
-		return(1);
+	tmp = ft_strjoin(s1, s2);
+	if (mode == 1)
+		free(s1);
+	else if (mode == 2)
+		free(s2);
 	else
 	{
-		if (i > 0)
-			return(1);
-		return(0);
+		free(s1);
+		free(s2);
 	}
+	return(tmp);
+
 }
 
-int		get_next_line(int fd, char **line)
+int		lecture(char **str, char **line)
 {
-	static char *buff_stock;
-	char		*out;
-	int			i;
-	int			j;
-	int			nb;
+	char	*tmp;
+	char	*tmp2;
 
-	i = 0;
-	j = 0;
-	nb = 0;
-	out = ft_strnew(BUFF_SIZE);
-	if (fd < 0)
-		return(-1);
-	if (buff_stock == NULL)
-		if (ft_read(&buff_stock, fd) == -1)
-			return(-1);
-	while (i > -1)
+	tmp = ft_strchr(*str, '\n');
+	free(*line);
+	*line = ft_strsub(*str, 0, tmp - *str);
+	tmp2 = ft_strdup(tmp + 1);
+	free(*str);
+	*str = tmp2;
+	return (1);
+}
+
+int		re_lecture2(char **stock, char *buff, char **line, char **str)
+{
+	char	*tmp;
+
+	tmp = ft_strchr(buff, '\n');
+	*stock = ft_strsub(buff, 0, tmp - buff);
+	*line = ft_strjoinfree(*line, *stock, 0);
+	*str = ft_strdup(tmp + 1);
+	free(buff);
+	return (1);
+}
+
+int		re_lecture(const int fd, char **line, char **str, int ret)
+{
+	char	*stock;
+	char	*tmp2;
+	char	*buff;
+	int		count;
+
+	count = 0;
+	if (*str != '\0')
+		*line = ft_strjoinfree(*str, *line, 2);
+	buff = ft_memalloc(BUFF_SIZE + 1);
+	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
-		if (j == 0)
-			out = ft_strnew(ft_strlen(buff_stock));
-		if (buff_stock[i] == '\n')
-			return(ft_return(out, line, &buff_stock, i));
-		else if (buff_stock[i] == '\0')
-		{
-			nb = ft_read(&buff_stock, fd);
-			if (nb == 0)
-				return(ft_return(out, line, &buff_stock, i));
-			if (nb == -1)
-				return(-1);
-			nb = i;
-			i = -1;
-			j = 0;
-			free(out);
-		}
-		else if (buff_stock[i] == EOF)
-			return(ft_return(out, line, &buff_stock, i));
+		count = 1;
+		buff[ret] = '\0';
+		if ((tmp2 = ft_strchr(buff, '\n')) == NULL)
+			*line = ft_strjoinfree(*line, buff, 1);
 		else
-			out[j++] = buff_stock[i];
-		i++;
+			return (re_lecture2(&stock, buff, line, str));
 	}
-	return(ft_return(out, line, &buff_stock, i));
+	free(buff);
+	if (ret == -1)
+		return (-1);
+	if (count == 0)
+		return (0);
+	return (1);
+}
+
+int		get_next_line(const int fd, char **line)
+{
+	static char	*str[256];
+	int			ret;
+
+	ret = 0;
+	if (fd < 0 || fd > 255 || !line)
+		return (-1);
+	*line = ft_memalloc(1);
+	if (str[fd] == NULL)
+		str[fd] = ft_memalloc(1);
+	if ((ft_strchr(str[fd], '\n')) != NULL)
+		return (lecture(&(str[fd]), line));
+	return (re_lecture(fd, line, &(str[fd]), ret));
 }
