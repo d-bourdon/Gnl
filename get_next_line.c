@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 13:33:17 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/03/02 13:47:23 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/03/24 11:52:02 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ char	*ft_strjoinfree(char *s1, char *s2, int mode)
 		free(s1);
 		free(s2);
 	}
-	return(tmp);
-
+	return (tmp);
 }
 
 int		lecture(char **str, char **line)
 {
+	printf("-");
 	char	*tmp;
 	char	*tmp2;
 
@@ -41,6 +41,7 @@ int		lecture(char **str, char **line)
 	tmp2 = ft_strdup(tmp + 1);
 	free(*str);
 	*str = tmp2;
+	printf("1\n");
 	return (1);
 }
 
@@ -53,11 +54,13 @@ int		re_lecture2(char **stock, char *buff, char **line, char **str)
 	*line = ft_strjoinfree(*line, *stock, 0);
 	*str = ft_strdup(tmp + 1);
 	free(buff);
+	printf("1\n");
 	return (1);
 }
 
 int		re_lecture(const int fd, char **line, char **str, int ret)
 {
+	printf("*");
 	char	*stock;
 	char	*tmp2;
 	char	*buff;
@@ -74,9 +77,14 @@ int		re_lecture(const int fd, char **line, char **str, int ret)
 		if ((tmp2 = ft_strchr(buff, '\n')) == NULL)
 			*line = ft_strjoinfree(*line, buff, 1);
 		else
+		{
 			return (re_lecture2(&stock, buff, line, str));
+		}
 	}
 	free(buff);
+	if (line != '\0')
+		count = 1; /// ICI DETECTER SI LINE EST PLEIN POUR UNE TOURNE OU PAS
+	printf("JE return mon ret: %d\n", ret); //****************************
 	if (ret == -1)
 		return (-1);
 	if (count == 0)
@@ -95,6 +103,7 @@ int		get_next_line(const int fd, char **line)
 	*line = ft_memalloc(1);
 	if (str[fd] == NULL)
 		str[fd] = ft_memalloc(1);
+	printf("Mon buffstock = %s|", str[fd]);
 	if ((ft_strchr(str[fd], '\n')) != NULL)
 		return (lecture(&(str[fd]), line));
 	return (re_lecture(fd, line, &(str[fd]), ret));
