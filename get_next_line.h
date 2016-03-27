@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 13:33:17 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/03/03 16:10:08 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/03/27 11:37:06 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@
 # include <unistd.h>
 # include "libft/libft.h"
 
-int		re_lecture(const int fd, char **line, char **str, int ret);
-int		re_lecture2(char **stock, char *buff, char **line, char **str);
-int		lecture(char **str, char **line);
 int		get_next_line(const int fd, char **line);
-char	*ft_strjoinfree(char *s1, char *s2, int	mode);
 
 # define BUFF_SIZE 20
 
