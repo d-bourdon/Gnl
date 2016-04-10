@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 13:33:17 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/04/10 12:17:01 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/04/10 14:34:57 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ int		lecture(char **str, char **line)
 	return (1);
 }
 
-int		re_lecture2(char **stock, char *buff, char **line, char **str)
+int		re_lecture2(char *buff, char **line, char **str)
 {
 	char	*tmp;
+	char	*stock;
 
 	tmp = ft_strchr(buff, '\n');
-	*stock = ft_strsub(buff, 0, tmp - buff);
-	*line = ft_strjoinfree(*line, *stock, 0);
+	stock = ft_strsub(buff, 0, tmp - buff);
+	*line = ft_strjoinfree(*line, stock, 0);
 	*str = ft_strdup(tmp + 1);
 	free(buff);
 	return (1);
@@ -57,7 +58,6 @@ int		re_lecture2(char **stock, char *buff, char **line, char **str)
 
 int		re_lecture(const int fd, char **line, char **str, int ret)
 {
-	char	*stock;
 	char	*tmp2;
 	char	*buff;
 	int		count;
@@ -65,19 +65,18 @@ int		re_lecture(const int fd, char **line, char **str, int ret)
 	count = 0;
 	if (*str != '\0')
 		*line = ft_strjoinfree(*str, *line, 2);
-	buff = ft_memalloc(BUFF_SIZE + 1);
+	buff = ft_strnew(BUFF_SIZE + 1);
 	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		count = 1;
 		buff[ret] = '\0';
-		if ((tmp2 = ft_strchr(buff, '\n')) == NULL)
-			*line = ft_strjoinfree(*line, buff, 1);
-		else
-			return (re_lecture2(&stock, buff, line, str));
+		if ((tmp2 = ft_strchr(buff, '\n')) != NULL)
+			return (re_lecture2(buff, line, str));
+		*line = ft_strjoinfree(*line, buff, 1);
 	}
-	if (ft_strlen(*line) > 0  && count == 0 && ret != -1)
+	if (ft_strlen(*line) > 0 && count == 0 && ret != -1)
 	{
-		*str = ft_strjoinfree(*line, "\n", 1);
+		*str = ft_strjoin(*line, "\n");
 		return (lecture(str, line));
 	}
 	free(buff);
@@ -96,9 +95,9 @@ int		get_next_line(const int fd, char **line)
 	ret = 0;
 	if (fd < 0 || fd > 255 || !line)
 		return (-1);
-	*line = ft_memalloc(1);
+	*line = ft_strnew(1);
 	if (str[fd] == NULL)
-		str[fd] = ft_memalloc(1);
+		str[fd] = ft_strnew(1);
 	if ((ft_strchr(str[fd], '\n')) != NULL)
 		return (lecture(&(str[fd]), line));
 	return (re_lecture(fd, line, &(str[fd]), ret));
