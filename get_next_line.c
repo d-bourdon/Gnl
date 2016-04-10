@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 13:33:17 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/03/24 14:51:40 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/04/10 12:17:01 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ int		re_lecture(const int fd, char **line, char **str, int ret)
 		else
 			return (re_lecture2(&stock, buff, line, str));
 	}
-	free(buff);
 	if (ft_strlen(*line) > 0  && count == 0 && ret != -1)
 	{
-		*str = ft_strjoin(*line, "\n");
-		return (get_next_line(fd, line));
+		*str = ft_strjoinfree(*line, "\n", 1);
+		return (lecture(str, line));
 	}
+	free(buff);
 	if (ret == -1)
 		return (-1);
 	if (count == 0)
