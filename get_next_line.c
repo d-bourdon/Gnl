@@ -6,7 +6,7 @@
 /*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/06 13:33:17 by dbourdon          #+#    #+#             */
-/*   Updated: 2016/04/10 15:34:17 by dbourdon         ###   ########.fr       */
+/*   Updated: 2016/04/25 15:39:41 by dbourdon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,27 @@ int		re_lecture(const int fd, char **line, char **str, int ret)
 
 int		get_next_line(const int fd, char **line)
 {
-	static char	*str[256];
-	int			ret;
+	static	t_list	*str;
+	int				ret;
+	t_list			*tmp;
+	t_list			*new;
 
+	tmp = str;
 	ret = 0;
-	if (fd < 0 || fd > 255 || !line)
+	if (fd < 0 || !line)
 		return (-1);
 	*line = ft_strnew(1);
-	if (str[fd] == NULL)
-		str[fd] = ft_strnew(1);
-	if ((ft_strchr(str[fd], '\n')) != NULL)
-		return (lecture(&(str[fd]), line));
-	return (re_lecture(fd, line, &(str[fd]), ret));
+	while (tmp != NULL && tmp->next != NULL && tmp->content_size != (size_t)fd)
+		tmp = tmp->next;
+	if (tmp == NULL || (tmp->content_size != (size_t)fd && tmp->next == NULL))
+	{
+		new = (t_list*)malloc(sizeof(t_list));
+		new->content_size = (size_t)fd;
+		new->content = ft_strnew(1);
+		ft_lstadd(&(str), new);
+		tmp = str;
+	}
+	if ((ft_strchr(tmp->content, '\n')) != NULL)
+		return (lecture((char**)(&(tmp->content)), line));
+	return (re_lecture(fd, line, (char**)(&(tmp->content)), ret));
 }
